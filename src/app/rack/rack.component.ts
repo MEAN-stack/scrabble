@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Tile } from '../tiles'
+import { Tile } from '../tile'
 
 @Component({
   selector: 'app-rack',
