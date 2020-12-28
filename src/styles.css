@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --board-width: 75vh;
+  --tile-width: 6vh;
+  --rack-width: 50vh;
+}
+.board {
+  position: relative;
+  display: grid;
+  width: var(--board-width);
+  grid-template-columns: repeat(15,1fr);
+  grid-template-rows: repeat(15,1fr);
+  gap: 1px;
+}
+.scrabble-square {
+  display: flex;
+  padding-bottom: 100%;
+  box-sizing: border-box;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  border: grey 1px solid;
+  background-color: whitesmoke;
+}
+.scrabble-square.TW{
+  background-color: red;
+}
+.scrabble-square.DW{
+  background-color: pink;
+}
+.scrabble-square.DL{
+  background-color: aqua;
+}
+.scrabble-square.TL{
+  background-color: blue;
+}
