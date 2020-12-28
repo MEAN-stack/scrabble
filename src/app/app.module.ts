@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ScrabbleBoardComponent } from './scrabble-board/scrabble-board.component';
+import { RackComponent } from './rack/rack.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ScrabbleBoardComponent
+    ScrabbleBoardComponent,
+    RackComponent
   ],
   imports: [
     BrowserModule
