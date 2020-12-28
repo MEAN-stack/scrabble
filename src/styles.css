@@ -1,7 +1,12 @@
+:root {
+  --board-width: 75vh;
+  --tile-width: 6vh;
+  --rack-width: 50vh;
+}
 .board {
   position: relative;
   display: grid;
-  width: 80vh;
+  width: var(--board-width);
   grid-template-columns: repeat(15,1fr);
   grid-template-rows: repeat(15,1fr);
   gap: 1px;
@@ -27,4 +32,37 @@
 }
 .scrabble-square.TL{
   background-color: blue;
+}
+.rack{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  width: var(--rack-width);
+}
+.tile{
+  position: relative;
+  display: flex;
+  border-radius: 10%;
+  text-align: center;
+  align-items: center;
+  width: var(--tile-width);
+  height: var(--tile-width);
+  background-color: lightgoldenrodyellow;
+}
+.tile-value{
+  position: absolute;
+  bottom: 4px;
+  right: 0;
+  padding: 5px 4px;
+  line-height: 0;
+  margin: 0;
+  font-size: 8px;
+  font-weight: 700;
+}
+.tile-letter{
+  margin: 0;
+  font-weight: 700;
+  width: 100%;
+  padding-bottom: 3px;
 }
