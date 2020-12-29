@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       (response) => {
         console.log("JWT: " + response.jwt);
+        localStorage.setItem('jwt', response.jwt);
         this.router.navigate(['../game-page']);
       },
       (err) => {

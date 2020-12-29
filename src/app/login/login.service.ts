@@ -11,8 +11,6 @@ interface LoginResponse {
   providedIn: 'root'
 })
 export class LoginService {
-  private heartbeatSubscription: Subscription;
-
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string): Observable<LoginResponse> {
