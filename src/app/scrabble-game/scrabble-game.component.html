@@ -1,0 +1,29 @@
+<app-scrabble-board [board]="board"></app-scrabble-board>
+<app-rack [tiles]="tiles"></app-rack>
+<div>
+  <app-player-card *ngFor="let player of game.players" [player]=player></app-player-card>
+</div>
+<div>
+  <label for="rowInput">Row</label>
+  <input
+    [(ngModel)]="move.row"
+    id="rowInput"
+    />
+  <label for="colInput">Col</label>
+  <input
+    [(ngModel)]="move.col"
+    id="colInput"
+    />
+  <label for="dirInput">Dir</label>
+  <input
+    [(ngModel)]="move.direction"
+    id="dirInput"
+    />
+  <label for="tilesInput">tiles</label>
+  <input
+    [(ngModel)]="move.tiles"
+    id="dirInput"
+    />
+  <button type="submit" class="btn btn-primary" (click)="playMove()">Make move</button>
+
+</div>

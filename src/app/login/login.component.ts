@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
       (response) => {
         console.log("JWT: " + response.jwt);
         localStorage.setItem('jwt', response.jwt);
-        this.router.navigate(['../game-page']);
+        localStorage.setItem('user', this.loginForm.value.username);
+        this.router.navigate(['../lobby']);
       },
       (err) => {
         console.log(err);

@@ -1,5 +1,5 @@
 :root {
-  --board-width: 75vh;
+  --board-width: 80vh;
   --tile-width: 6vh;
   --rack-width: 50vh;
 }
@@ -7,13 +7,15 @@
   position: relative;
   display: grid;
   width: var(--board-width);
+  height: var(--board-width);
+  min-width: 587px;
+  min-height: 587px;
   grid-template-columns: repeat(15,1fr);
   grid-template-rows: repeat(15,1fr);
-  gap: 1px;
+  /* gap: 1px; */
 }
 .scrabble-square {
   display: flex;
-  padding-bottom: 100%;
   box-sizing: border-box;
   position: relative;
   justify-content: center;
@@ -34,20 +36,22 @@
   background-color: blue;
 }
 .rack{
+  margin-top: 10px;
   position: relative;
-  display: flex;
+  display: grid;
   justify-content: center;
   gap: 5px;
-  width: var(--rack-width);
+  grid-template-columns: repeat(7,1fr);
+  width: 450px;
+  height: 60px;
 }
 .tile{
   position: relative;
-  display: flex;
   border-radius: 10%;
   text-align: center;
   align-items: center;
-  width: var(--tile-width);
-  height: var(--tile-width);
+  width: 95%;
+  height: 95%;
   background-color: lightgoldenrodyellow;
 }
 .tile-value{
@@ -61,8 +65,14 @@
   font-weight: 700;
 }
 .tile-letter{
-  margin: 0;
+  margin-top: 30%;
   font-weight: 700;
   width: 100%;
-  padding-bottom: 3px;
+}
+.player-card{
+  border-radius: 8%;
+  background-color: mediumturquoise;
+}
+.player-card.true{
+  background-color: palegreen;
 }

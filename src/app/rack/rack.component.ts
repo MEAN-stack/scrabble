@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input, Output } from '@angular/core'
 import { Tile } from '../tile'
 
 @Component({
@@ -7,7 +7,7 @@ import { Tile } from '../tile'
   styleUrls: ['./rack.component.css']
 })
 export class RackComponent implements OnInit {
-  tiles: Tile[] = [{letter: "F", value: 4, isBlank: false},
+  @Input()tiles: Tile[] = [{letter: "F", value: 4, isBlank: false},
                    {letter: "R", value: 1, isBlank: false},
                    {letter: "G", value: 2, isBlank: false},
                    {letter: "I", value: 1, isBlank: false},

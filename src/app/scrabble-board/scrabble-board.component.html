@@ -1,6 +1,10 @@
 <!-- Example usage <center><app-scrabble-board></app-scrabble-board></center> -->
 
 <div class="board">
-  <div *ngFor="let square of squares" class="{{'scrabble-square '+square.bonus}}">
+  <div *ngFor="let square of squares" class="{{'s\crabble-square '+square.bonus}}" row="{{square.row}}" col="{{square.col}}">
+    <div *ngIf="testfunc(square.row,square.col)" class="tile">
+      <p class="tile-letter">{{currentTile.letter}}</p>
+      <p class="tile-value">{{currentTile.value}}</p>
+    </div>
   </div>
 </div>

@@ -7,9 +7,9 @@ export interface ScrabbleSquare {
 var squares: ScrabbleSquare[] = [];
 
 function bonus(row: number, col: number){
-  if((row==8) && (col==8)) return 'DW';
-  var x = (col<8) ? col-1 : 15-col
-  var y = (row<8) ? row-1 : 15-row
+  if((row==7) && (col==7)) return 'DW';
+  var x = (col<7) ? col : 14-col
+  var y = (row<7) ? row : 14-row
   if((x==0) && (y==0) || (x==7) && (y==0) || (y==7) && (x==0)) return 'TW';
   if(x==y){
     if(x==5) return 'TL';
@@ -23,8 +23,8 @@ function bonus(row: number, col: number){
   return 'none'
 }
 
-for(var row=1;row<=15;row++){
-  for(var col=1;col<=15;col++){
+for(var row=0;row<15;row++){
+  for(var col=0;col<15;col++){
     var square: ScrabbleSquare = {
       row: row,
       col: col,
