@@ -15,3 +15,10 @@
     <p class="tile-value">{{tile.value}}</p>
   </div>
 </div>
+<div>
+  <label>Tiles</label>
+  <input
+    [(ngModel)]="playTiles"
+    />
+  <button type="submit" class="btn btn-primary" (click)="playMove()">Make move</button>
+</div>

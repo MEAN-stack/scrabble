@@ -38,7 +38,6 @@ export class ScrabbleGameComponent implements OnInit {
   game: ScrabbleGame;
   tiles: Tile[];
   board: string;
-  @Input()move: PlayMove = {row: 0, col: 0, direction: 'A', tiles: '', move_type: 'play'};
 
   refresh(){
     const source = timer(0,1000);
@@ -67,19 +66,6 @@ export class ScrabbleGameComponent implements OnInit {
       );
     });
   };
-
-  playMove(){
-    console.log(this.move);
-    this.gameService.playMove(this.move).subscribe(
-      (response) => {
-        console.log('yay');
-        console.log(response);
-      },
-      (err) => {
-        console.log('no');
-        console.log(err);
-      });
-  }
 
   ngOnInit(): void {
     this.refresh();
