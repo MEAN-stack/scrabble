@@ -153,11 +153,13 @@ export class ScrabbleBoardComponent implements OnInit {
     console.log(move);
     this.gameService.playMove(move).subscribe(
       (response) => {
-        console.log('yay');
         console.log(response);
+        if(response.status=='ok'){
+          this.tiles = response.tiles;
+          this.displayedTiles = this.tiles;
+        }
       },
       (err) => {
-        console.log('no');
         console.log(err);
       });
   }
@@ -167,17 +169,10 @@ export class ScrabbleBoardComponent implements OnInit {
   userSquare: Square = {row: 100, col: 100};
   playTiles: string = '';
   playSquare: Square = {row: 40, col: 50};
-  @Input()tiles: Tile[] = [{letter: "F", value: 4, isBlank: false},
-                           {letter: "R", value: 1, isBlank: false},
-                           {letter: "G", value: 2, isBlank: false},
-                           {letter: "I", value: 1, isBlank: false},
-                           {letter: "Z", value: 10, isBlank: false},
-                           {letter: "F", value: 4, isBlank: false},
-                           {letter: "A", value: 1, isBlank: false}];
-
-  displayedTiles = this.tiles;
-    ngOnInit(): void {
-      this.displayedTiles = this.tiles;
-    }
+  @Input()tiles: Tile[]
+  displayedTiles: Tile[]
+  ngOnInit(): void {
+    this.displayedTiles = this.tiles
+  }
 
 }
