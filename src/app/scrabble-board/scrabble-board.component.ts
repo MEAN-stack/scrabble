@@ -105,7 +105,7 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
         this.userBoard=this.setCharAt(this.userBoard,this.userSquare.row*15+this.userSquare.col,letter);
         this.playTiles+=letter;
         this.advanceSquare(1);
-        return;
+        return true;
       }
     }
     for(let i = 0;i<this.displayedTiles.length;i++){
@@ -115,9 +115,10 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
         this.userBoard=this.setCharAt(this.userBoard,this.userSquare.row*15+this.userSquare.col,letter.toLowerCase());
         this.playTiles+=letter.toLowerCase();
         this.advanceSquare(1);
-        return;
+        return true;
       }
     }
+    return false;
   }
 
   advanceSquare(dir: number){
@@ -158,6 +159,10 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
       (err) => {
         console.log(err);
       });
+  }
+
+  testfunction(evt){
+    console.log(evt);
   }
 
   userBoard: string = this.board;
