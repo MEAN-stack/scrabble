@@ -35,17 +35,16 @@ export class ScrabbleGameComponent implements OnInit {
   ) { }
 
   user: string = localStorage.getItem('user');
-  id: number = +localStorage.getItem('id');
   game: ScrabbleGame;
   tiles: Tile[];
   board: string;
   @Input()move: PlayMove = {row: 0, col: 0, direction: 'A', tiles: '', move_type: 'play'};
 
   refresh(){
-    const source = timer(1000,1000);
+    const source = timer(0,1000);
     const abc = source.subscribe(val => {
 //      console.log(val);
-      this.gameService.getGameInfo(this.id).subscribe(
+      this.gameService.getGameInfo().subscribe(
         (response) => {
           this.game = response
           this.board = this.game.board;
@@ -70,7 +69,8 @@ export class ScrabbleGameComponent implements OnInit {
   };
 
   playMove(){
-    this.gameService.playMove(this.id, this.move).subscribe(
+    console.log(this.move);
+    this.gameService.playMove(this.move).subscribe(
       (response) => {
         console.log('yay');
         console.log(response);

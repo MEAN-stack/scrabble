@@ -26,17 +26,20 @@ export interface PlayMove {
 export class GameService {
   constructor(private http: HttpClient, private router: Router) { }
 
+  id: number = +localStorage.getItem('id');
+
+
   createGame(): Observable<CreateGameResponse> {
     return this.http.post<CreateGameResponse>("/api/games", {});
   };
 
-  joinGame(id: number): Observable<JoinGameResponse> {
+  joinGame(id: number = this.id): Observable<JoinGameResponse> {
     return this.http.post<JoinGameResponse>("/api/games/"+id+"/players", {});
   };
-  getGameInfo(id: number): Observable<any> {
-    return this.http.get<any>("/api/games/"+id, {});
+  getGameInfo(id: number = this.id): Observable<any> {
+    return this.http.get<any>("/api/games/"+this.id, {});
   };
-  playMove(id: number, move: PlayMove): Observable<any> {
-    return this.http.put<any>("/api/games/"+id, {});
+  playMove(move: PlayMove, id: number = this.id): Observable<any> {
+    return this.http.put<any>("/api/games/"+this.id, move);
   };
 }

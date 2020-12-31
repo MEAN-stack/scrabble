@@ -1,10 +1,17 @@
 <!-- Example usage <center><app-scrabble-board></app-scrabble-board></center> -->
 
-<div class="board">
-  <div *ngFor="let square of squares" class="{{'s\crabble-square '+square.bonus}}" row="{{square.row}}" col="{{square.col}}">
+<div class="board" tabindex="1" (keypress)="onKeyPress($event)" (keydown)="onKeyDown($event)">
+  <div *ngFor="let square of squares" class="{{'s\crabble-square '+square.bonus}}" row="{{square.row}}" col="{{square.col}}" (click)="onClick(square.row,square.col)">
+    <div *ngIf="isFocused(square.row,square.col)" class="{{'glyphicon glyphicon-arrow-'+this.userDirection}}"></div>
     <div *ngIf="testfunc(square.row,square.col)" class="tile">
       <p class="tile-letter">{{currentTile.letter}}</p>
       <p class="tile-value">{{currentTile.value}}</p>
     </div>
+  </div>
+</div>
+<div class="rack">
+  <div *ngFor="let tile of displayedTiles" class="tile">
+    <p class="tile-letter">{{tile.letter}}</p>
+    <p class="tile-value">{{tile.value}}</p>
   </div>
 </div>

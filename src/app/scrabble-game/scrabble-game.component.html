@@ -1,5 +1,4 @@
-<app-scrabble-board [board]="board"></app-scrabble-board>
-<app-rack [tiles]="tiles"></app-rack>
+<app-scrabble-board [board]="board" [tiles]="tiles"></app-scrabble-board>
 <div>
   <app-player-card *ngFor="let player of game.players" [player]=player></app-player-card>
 </div>
