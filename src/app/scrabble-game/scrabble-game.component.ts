@@ -39,8 +39,8 @@ export class ScrabbleGameComponent implements OnInit {
 
   id: number = +localStorage.getItem('id');
   user: string = localStorage.getItem('user');
-  game: ScrabbleGame;
-  tiles: Tile[];
+  game: ScrabbleGame = {id: undefined, owner: undefined, players: [], current_player: undefined, status: undefined, num_free_tiles: undefined, board: ' '.repeat(225)};
+  tiles: Tile[] = [];
 
   getUrl(){
     if(window.location.protocol=='http:'){
@@ -56,8 +56,7 @@ export class ScrabbleGameComponent implements OnInit {
       return data;
     }).subscribe(
       (msg) => {
-        console.log('websocket');
-        console.log(msg);
+        console.log('websocket', msg);
         if(msg.title=='newplayer'){
           if(this.id === msg.data.gameId){
             this.game.players.push({ user: msg.data.player, score: 0, tiles: undefined, is_current: false});
@@ -75,40 +74,11 @@ export class ScrabbleGameComponent implements OnInit {
         }
       });
 
-//   refresh(){
-//     const source = timer(0,1000);
-//     const abc = source.subscribe(val => {
-// //      console.log(val);
-//       this.gameService.getGameInfo().subscribe(
-//         (response) => {
-//           this.game = response
-//           this.board = this.game.board;
-// //          console.dir(this.game);
-//           for(let i = 0; i < this.game.players.length; i++){
-//             let player = this.game.players[i]
-//             player.is_current = false;
-//             if(player.user===this.game.current_player){
-//               player.is_current = true;
-//             }
-//             if(this.user===player.user){
-//               this.tiles = player.tiles;
-//             }
-//             //          this.rack.tiles = this.game.
-//           }
-//         },
-//         (err) => {
-//           console.log(err);
-//         }
-//       );
-//     });
-//   };
-
   ngOnInit(): void {
 
     this.gameService.getGameInfo().subscribe(
       (response) => {
         this.game = response
-        //          console.dir(this.game);
         for(let i = 0; i < this.game.players.length; i++){
           let player = this.game.players[i]
           player.is_current = false;

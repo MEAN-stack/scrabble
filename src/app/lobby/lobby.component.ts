@@ -40,9 +40,7 @@ export class LobbyComponent implements OnInit {
       (response) => {
         console.log('success ' + response.text);
         localStorage.setItem('id', id);
-        setTimeout(() => {
-          this.router.navigate(['../game-page']);
-        }, 500);
+        this.router.navigate(['../game-page']);
       },
       (err) => {
         console.log('fail');

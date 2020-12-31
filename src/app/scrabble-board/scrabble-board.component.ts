@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { scrabbleSquares } from '../scrabble-squares';
 import { GameService, PlayMove } from '../game/game.service';
 import { Tile, tileValues } from '../tile';
@@ -14,7 +14,7 @@ interface Square{
   styleUrls: ['./scrabble-board.component.css']
 })
 
-export class ScrabbleBoardComponent implements OnInit {
+export class ScrabbleBoardComponent implements OnInit, OnChanges {
   squares = scrabbleSquares;
 
   constructor(
@@ -52,7 +52,7 @@ export class ScrabbleBoardComponent implements OnInit {
 
   onClick(row: number, col: number){
     this.playTiles = '';
-    this.displayedTiles = this.tiles;
+    this.displayedTiles = this.tiles.slice();
     this.userBoard = this.board;
     if(this.isFocused(row,col)){
       this.userDirection = (this.userDirection==='right') ? 'down':'right';
@@ -88,9 +88,8 @@ export class ScrabbleBoardComponent implements OnInit {
       }
     }
     if(evt.key=='Enter'){
-      console.log('put');
       this.playMove();
-      this.userBoard = '';
+      this.userBoard = ' '.repeat(225);
       this.playSquare = {row: 100, col: 100};
       this.userSquare = {row: 100, col: 100};
     }
@@ -98,12 +97,9 @@ export class ScrabbleBoardComponent implements OnInit {
   }
 
   onKeyPress(evt){
-    console.log('userSquare: ', this.userSquare);
-    console.log('playSquare: ',this.playSquare);
     let letter=evt.key.toUpperCase();
     for(let i = 0;i<this.displayedTiles.length;i++){
       let tile = this.displayedTiles[i];
-      console.log(tile);
       if(letter===tile.letter){
         this.displayedTiles.splice(i,1);
         this.userBoard=this.setCharAt(this.userBoard,this.userSquare.row*15+this.userSquare.col,letter);
@@ -156,7 +152,7 @@ export class ScrabbleBoardComponent implements OnInit {
         console.log(response);
         if(response.status=='ok'){
           this.tiles = response.tiles;
-          this.displayedTiles = this.tiles;
+          this.displayedTiles = this.tiles.slice();
         }
       },
       (err) => {
@@ -172,7 +168,8 @@ export class ScrabbleBoardComponent implements OnInit {
   @Input()tiles: Tile[]
   displayedTiles: Tile[]
   ngOnInit(): void {
-    this.displayedTiles = this.tiles
   }
-
+  ngOnChanges(): void {
+    this.displayedTiles = this.tiles.slice();
+  }
 }
