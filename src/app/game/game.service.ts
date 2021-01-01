@@ -37,9 +37,9 @@ export class GameService {
     return this.http.post<JoinGameResponse>('/api/games/' + id + '/players', {});
   }
   getGameInfo(id: number = this.id): Observable<any> {
-    return this.http.get<any>('/api/games/' + this.id, {});
+    return this.http.get<any>('/api/games/' + id, {});
   }
   playMove(move: PlayMove, id: number = this.id): Observable<any> {
-    return this.http.put<any>('/api/games/' + this.id, move);
+    return this.http.put<any>('/api/games/' + id, move);
   }
 }

@@ -58,7 +58,8 @@ export class ScrabbleGameComponent implements OnInit {
   }
 
   refresh(): void {
-    this.gameService.getGameInfo().subscribe(
+    this.id = +localStorage.getItem('id');
+    this.gameService.getGameInfo(this.id).subscribe(
       (response) => {
         this.game = response;
         for (const player of this.game.players){
@@ -90,7 +91,7 @@ export class ScrabbleGameComponent implements OnInit {
               this.game.players.push({ user: msg.data.player, score: 0, tiles: undefined, is_current: false});
             }
           }
-          if (msg.title === 'game'){
+          if (msg.title === 'game' && msg.data.id === this.id){
             this.game = msg.data;
             for (const player of this.game.players){
               player.is_current = false;

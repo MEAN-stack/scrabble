@@ -160,7 +160,8 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
   }
 
   change(): void{
-    this.gameService.playMove({move_type: 'change', tiles: this.playTiles}).subscribe(
+    const id = +localStorage.getItem('id');
+    this.gameService.playMove({move_type: 'change', tiles: this.playTiles}, id).subscribe(
       (response) => {
         console.log(response);
         if (response.status === 'ok'){
@@ -174,7 +175,8 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
   }
 
   pass(): void{
-    this.gameService.playMove({move_type: 'pass'}).subscribe(
+    const id = +localStorage.getItem('id');
+    this.gameService.playMove({move_type: 'pass'}, id).subscribe(
       (response) => {
         console.log(response);
         if (response.status === 'ok'){
@@ -195,6 +197,7 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
   }
 
   playMove(): void{
+    const id = +localStorage.getItem('id');
     const move = {
       row: this.playSquare.row,
       col: this.playSquare.col,
@@ -203,7 +206,7 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
       move_type: 'play'
     };
     console.log(move);
-    this.gameService.playMove(move).subscribe(
+    this.gameService.playMove(move, id).subscribe(
       (response) => {
         console.log(response);
         if (response.status === 'ok'){
