@@ -6,20 +6,20 @@ import { Tile } from '../tile';
 import { timer } from 'rxjs';
 
 export interface Player {
-  user: string,
-  tiles: Tile[],
-  is_current: boolean,
-  score: number
+  user: string;
+  tiles: Tile[];
+  is_current: boolean;
+  score: number;
 }
 
 export interface ScrabbleGame {
-  id: number,
-  owner: string,
-  players: Player[],
-  current_player: string,
-  status: string,
-  num_free_tiles: number,
-  board: string,
+  id: number;
+  owner: string;
+  players: Player[];
+  current_player: string;
+  status: string;
+  num_free_tiles: number;
+  board: string;
 }
 
 @Component({
@@ -38,56 +38,62 @@ export class ScrabbleGameComponent implements OnInit {
 
   id: number = +localStorage.getItem('id');
   user: string = localStorage.getItem('user');
-  game: ScrabbleGame = {id: undefined, owner: undefined, players: [], current_player: undefined, status: undefined, num_free_tiles: undefined, board: ' '.repeat(225)};
+  game: ScrabbleGame = {
+    id: undefined,
+    owner: undefined,
+    players: [],
+    current_player: undefined,
+    status: undefined,
+    num_free_tiles: undefined,
+    board: ' '.repeat(225)};
+
   tiles: Tile[] = [];
 
-  getUrl(){
-    if(window.location.protocol=='http:'){
-      return 'ws://'+window.location.host;
+  getUrl(): string{
+    if (window.location.protocol === 'http:'){
+      return 'ws://' + window.location.host;
     } else {
-      return 'wss://'+window.location.host;
+      return 'wss://' + window.location.host;
     }
   }
 
-  test = this.ws.connect(this.getUrl()).map(
-    (response) => {
-      let data = JSON.parse(response.data);
-      return data;
-    }).subscribe(
-      (msg) => {
-        console.log('websocket', msg);
-        if(msg.title=='newplayer'){
-          if(this.id === msg.data.gameId){
-            this.game.players.push({ user: msg.data.player, score: 0, tiles: undefined, is_current: false});
-          }
-        }
-        if(msg.title=='game'){
-          this.game=msg.data;
-          for(let i = 0; i < this.game.players.length; i++){
-            let player = this.game.players[i]
-            player.is_current = false;
-            if(player.user===this.game.current_player){
-              player.is_current = true;
-            }
-          }
-        }
-      });
 
   ngOnInit(): void {
 
+    this.ws.connect(this.getUrl()).map(
+      (response) => {
+        const data = JSON.parse(response.data);
+        return data;
+      }).subscribe(
+        (msg) => {
+          console.log('websocket', msg);
+          if (msg.title === 'newplayer'){
+            if (this.id === msg.data.gameId){
+              this.game.players.push({ user: msg.data.player, score: 0, tiles: undefined, is_current: false});
+            }
+          }
+          if (msg.title === 'game'){
+            this.game = msg.data;
+            for (const player of players){
+              player.is_current = false;
+              if (player.user === this.game.current_player){
+                player.is_current = true;
+              }
+            }
+          }
+        });
+
     this.gameService.getGameInfo().subscribe(
       (response) => {
-        this.game = response
-        for(let i = 0; i < this.game.players.length; i++){
-          let player = this.game.players[i]
+        this.game = response;
+        for (const player of players){
           player.is_current = false;
-          if(player.user===this.game.current_player){
+          if (player.user === this.game.current_player){
             player.is_current = true;
           }
-          if(this.user===player.user){
+          if (this.user === player.user){
             this.tiles = player.tiles;
           }
-          //          this.rack.tiles = this.game.
         }
       },
       (err) => {

@@ -14,6 +14,6 @@ export class LoginService {
   constructor(private http: HttpClient, private router: Router) { }
 
   login(username: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>("/api/sessions", { username: username });
-  };
+    return this.http.post<LoginResponse>('/api/sessions', { username });
+  }
 }

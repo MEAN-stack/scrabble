@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        var jwt = localStorage.getItem('jwt');
+        const jwt = localStorage.getItem('jwt');
         if (jwt !== null && jwt !== '') {
             request = request.clone({
                 headers: request.headers.set('X-Auth', jwt)

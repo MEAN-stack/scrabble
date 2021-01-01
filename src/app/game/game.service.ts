@@ -12,11 +12,11 @@ interface JoinGameResponse {
 }
 
 export interface PlayMove {
-  move_type: string,
-  row?: number,
-  col?: number,
-  direction?: string,
-  tiles?: string
+  move_type: string;
+  row?: number;
+  col?: number;
+  direction?: string;
+  tiles?: string;
 }
 
 @Injectable({
@@ -30,16 +30,16 @@ export class GameService {
 
 
   createGame(): Observable<CreateGameResponse> {
-    return this.http.post<CreateGameResponse>("/api/games", {});
-  };
+    return this.http.post<CreateGameResponse>('/api/games', {});
+  }
 
   joinGame(id: number = this.id): Observable<JoinGameResponse> {
-    return this.http.post<JoinGameResponse>("/api/games/"+id+"/players", {});
-  };
+    return this.http.post<JoinGameResponse>('/api/games/' + id + '/players', {});
+  }
   getGameInfo(id: number = this.id): Observable<any> {
-    return this.http.get<any>("/api/games/"+this.id, {});
-  };
+    return this.http.get<any>('/api/games/' + this.id, {});
+  }
   playMove(move: PlayMove, id: number = this.id): Observable<any> {
-    return this.http.put<any>("/api/games/"+this.id, move);
-  };
+    return this.http.put<any>('/api/games/' + this.id, move);
+  }
 }

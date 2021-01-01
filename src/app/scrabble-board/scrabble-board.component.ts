@@ -21,48 +21,57 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
     private gameService: GameService
   ) { }
 
-  @Input()board = ' '.repeat(225);//' '.repeat(112) + 'HELLO' + ' '.repeat(108);
+  @Input()board = ' '.repeat(225);
+  @Input()tiles: Tile[];
+  userBoard: string = this.board;
+  userDirection = 'right';
+  userSquare: Square = {row: 100, col: 100};
+  playTiles = '';
+  playSquare: Square = {row: 40, col: 50};
+  displayedTiles: Tile[];
   currentTile: Tile = {letter: 'A', value: 1, isBlank: false};
 
-  setCharAt(str, index, chr) {
-    if (index > str.length - 1) return str;
+  setCharAt(str, index, chr): string {
+    if (index > str.length - 1) {
+      return str;
+    }
     return str.substring(0, index) + chr + str.substring(index + 1);
   }
 
-  testfunc(row,col){
-    let i=col+row*15;
-    let letter=this.board[i];
-    let userLetter=this.userBoard[i];
-    if(letter!=' '){
+  testfunc(row, col): boolean{
+    const index = col + row * 15;
+    const letter = this.board[index];
+    const userLetter = this.userBoard[index];
+    if (letter !== ' '){
       this.currentTile = {
-        letter: letter,
+        letter,
         value: tileValues[letter.charCodeAt(0) - 65],
-        isBlank: false}
+        isBlank: false};
       return true;
     }
-    if(userLetter!=' '){
+    if (userLetter !== ' '){
       this.currentTile = {
         letter: userLetter,
         value: tileValues[userLetter.charCodeAt(0) - 65],
-        isBlank: false}
+        isBlank: false};
       return true;
     }
     return false;
   }
 
-  onClick(row: number, col: number){
+  onClick(row: number, col: number): void{
     this.resetVars();
-    if(this.isFocused(row,col)){
-      this.userDirection = (this.userDirection==='right') ? 'down':'right';
+    if (this.isFocused(row, col)){
+      this.userDirection = (this.userDirection === 'right') ? 'down' : 'right';
     }
-    this.userSquare = {row: row, col: col};
-    this.playSquare = {row: row, col: col};
+    this.userSquare = {row, col};
+    this.playSquare = {row, col};
   }
 
-  tileClick(tile){
+  tileClick(tile): void{
     console.dir(tile);
     let letter;
-    if(tile.isBlank){
+    if (tile.isBlank){
       letter = prompt('what letter for the blank?');
     } else {
       letter = tile.letter;
@@ -70,89 +79,86 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
     this.onKeyPress({key: letter});
   }
 
-  onKeyDown(evt){
-    if(evt.key=='Backspace'){
+  onKeyDown(evt): void{
+    if (evt.key === 'Backspace'){
       this.advanceSquare(-1);
-      let letter = this.userBoard[this.userSquare.row*15+this.userSquare.col];
+      const index = this.userSquare.row * 15 + this.userSquare.col;
+      const letter = this.userBoard[index];
       if (letter === ' '){
         this.playSquare.row = this.userSquare.row;
         this.playSquare.col = this.userSquare.col;
         return;
       }
-      this.userBoard = this.setCharAt(this.userBoard,this.userSquare.row*15+this.userSquare.col,' ');
-      this.playTiles = this.playTiles.slice(0,-1);
-      for(let i = 0; i<this.tiles.length;i++){
-        let tile = this.tiles[i]
-        if(letter===tile.letter){
+      this.userBoard = this.setCharAt(this.userBoard, index, ' ');
+      this.playTiles = this.playTiles.slice(0, -1);
+      for (const tile of tiles){
+        if (letter === tile.letter){
           this.displayedTiles.push(tile);
           return;
         }
       }
-      for(let i = 0; i<this.tiles.length;i++){
-        let tile = this.tiles[i]
-        if(tile.isBlank){
+      for (const tile of tiles){
+        if (tile.isBlank){
           this.displayedTiles.push(tile);
           return;
         }
       }
     }
-    if(evt.key=='Enter'){
+    if (evt.key === 'Enter'){
       this.playMove();
       this.userBoard = ' '.repeat(225);
       this.playSquare = {row: 100, col: 100};
       this.userSquare = {row: 100, col: 100};
     }
-
   }
 
-  onKeyPress(evt){
-    let letter=evt.key.toUpperCase();
-    for(let i = 0;i<this.displayedTiles.length;i++){
-      let tile = this.displayedTiles[i];
-      if(letter===tile.letter){
-        this.displayedTiles.splice(i,1);
-        this.userBoard=this.setCharAt(this.userBoard,this.userSquare.row*15+this.userSquare.col,letter);
-        this.playTiles+=letter;
+  onKeyPress(evt): void{
+    const letter = evt.key.toUpperCase();
+    const index = this.userSquare.row * 15 + this.userSquare.col;
+    for (let i = 0; i < this.displayedTiles.length; i++){
+      const tile = this.displayedTiles[i];
+      if (letter === tile.letter){
+        this.displayedTiles.splice(i, 1);
+        this.userBoard = this.setCharAt(this.userBoard, index, letter);
+        this.playTiles += letter;
         this.advanceSquare(1);
-        return true;
       }
     }
-    for(let i = 0;i<this.displayedTiles.length;i++){
-      let tile = this.displayedTiles[i];
-      if(tile.isBlank){
-        this.displayedTiles.splice(i,1);
-        this.userBoard=this.setCharAt(this.userBoard,this.userSquare.row*15+this.userSquare.col,letter.toLowerCase());
-        this.playTiles+=letter.toLowerCase();
+    for (let i = 0; i < this.displayedTiles.length; i++){
+      const tile = this.displayedTiles[i];
+      if (tile.isBlank){
+        this.displayedTiles.splice(i, 1);
+        this.userBoard = this.setCharAt(this.userBoard, index, letter.toLowerCase());
+        this.playTiles += letter.toLowerCase();
         this.advanceSquare(1);
-        return true;
       }
     }
-    return false;
   }
 
-  advanceSquare(dir: number){
-    if(this.userDirection==='right'){
-      this.userSquare.col+=dir;
-      while(this.userSquare.col>=0 && this.userSquare.col<15 && this.board[this.userSquare.row*15+this.userSquare.col]!=' '){
-        this.userSquare.col+=dir;
+  advanceSquare(dir: number): void{
+    let index = this.userSquare.row * 15 + this.userSquare.col;
+    if (this.userDirection === 'right'){
+      while (this.userSquare.col >= 0 && this.userSquare.col < 14 && this.board[index] !== ' '){
+        this.userSquare.col += dir;
+        index += 1;
       }
     }else{
-      this.userSquare.row+=dir;
-      while(this.userSquare.row>=0 && this.userSquare.row<15 && this.board[this.userSquare.row*15+this.userSquare.col]!=' '){
-        this.userSquare.row+=dir;
+      while (this.userSquare.row >= 0 && this.userSquare.row < 14 && this.board[index] !== ' '){
+        this.userSquare.row += dir;
+        index += 15;
       }
     }
   }
 
-  isFocused(row: number, col: number){
-    return (this.userSquare.row ===row && this.userSquare.col===col);
+  isFocused(row: number, col: number): boolean{
+    return (this.userSquare.row === row && this.userSquare.col === col);
   }
 
-  change(){
+  change(): void{
     this.gameService.playMove({move_type: 'change', tiles: this.playTiles}).subscribe(
       (response) => {
         console.log(response);
-        if(response.status=='ok'){
+        if (response.status === 'ok'){
           this.tiles = response.tiles;
         }
         this.resetVars();
@@ -162,34 +168,32 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
       });
   }
 
-  pass(){
-    this.gameService.playMove({move_type:'pass'}).subscribe(
+  pass(): void{
+    this.gameService.playMove({move_type: 'pass'}).subscribe(
       (response) => {
         console.log(response);
-        if(response.status=='ok'){
+        if (response.status === 'ok'){
           this.tiles = response.tiles;
           this.resetVars();
         }
-
         this.resetVars();
-
       },
       (err) => {
         console.log(err);
       });
   }
 
-  resetVars(){
-    this.userBoard = ' '.repeat(255)
-    this.displayedTiles = this.tiles.slice()
-    this.playTiles = ''
+  resetVars(): void{
+    this.userBoard = ' '.repeat(255);
+    this.displayedTiles = this.tiles.slice();
+    this.playTiles = '';
   }
 
-  playMove(){
-    let move = {
+  playMove(): void{
+    const move = {
       row: this.playSquare.row,
       col: this.playSquare.col,
-      direction: (this.userDirection==='right')? 'A':'D',
+      direction: (this.userDirection === 'right') ? 'A' : 'D',
       tiles: this.playTiles,
       move_type: 'play'
     };
@@ -197,7 +201,7 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
     this.gameService.playMove(move).subscribe(
       (response) => {
         console.log(response);
-        if(response.status=='ok'){
+        if (response.status === 'ok'){
           this.tiles = response.tiles;
         }
         this.resetVars();
@@ -208,17 +212,7 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
       });
   }
 
-  testfunction(evt){
-    console.log(evt);
-  }
 
-  userBoard: string = this.board;
-  userDirection: string = 'right';
-  userSquare: Square = {row: 100, col: 100};
-  playTiles: string = '';
-  playSquare: Square = {row: 40, col: 50};
-  @Input()tiles: Tile[]
-  displayedTiles: Tile[]
   ngOnInit(): void {
   }
   ngOnChanges(): void {

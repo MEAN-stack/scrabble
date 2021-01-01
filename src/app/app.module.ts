@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module'
+import { AppRoutingModule } from './app-routing.module';
 import { ScrabbleBoardComponent } from './scrabble-board/scrabble-board.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';

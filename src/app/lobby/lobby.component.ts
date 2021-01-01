@@ -8,6 +8,7 @@ import { GameService } from '../game/game.service';
   templateUrl: './lobby.component.html',
   styleUrls: ['./lobby.component.css']
 })
+
 export class LobbyComponent implements OnInit {
 
   constructor(
@@ -19,15 +20,15 @@ export class LobbyComponent implements OnInit {
     id: new FormControl(0, Validators.required),
   });
 
-  onSubmit() {
+  onSubmit(): void {
     this.joinGameForm.disable();
     this.joinGame(this.joinGameForm.value.id);
   }
 
-  createGame() {
+  createGame(): void {
     this.gameService.createGame().subscribe(
       (response) => {
-        console.log("game id: " + response.id);
+        console.log('game id: ' + response.id);
         this.joinGame(response.id);
       },
       (err) => {
@@ -35,14 +36,15 @@ export class LobbyComponent implements OnInit {
       }
     );
   }
-  joinGame(id) {
+
+  joinGame(id): void {
     this.gameService.joinGame(id).subscribe(
       (response) => {
         console.log('success ' + response.text);
         localStorage.setItem('id', id);
         setTimeout(() => {
           this.router.navigate(['../game-page']);
-        },500);
+        }, 500);
       },
       (err) => {
         console.log('fail');

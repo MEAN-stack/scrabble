@@ -31,4 +31,4 @@ export const tileValues = [
   8,
   4,
   10,
-]; //A..Z
+]; // A..Z
