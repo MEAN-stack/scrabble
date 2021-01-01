@@ -19,6 +19,7 @@
   display: grid;
   height: var(--board-width);
   min-height: 587px;
+  min-width: 587px;
   grid-template-columns: repeat(15,1fr);
   grid-template-rows: repeat(15,1fr);
   /* gap: 1px; */

@@ -13,10 +13,10 @@ interface JoinGameResponse {
 
 export interface PlayMove {
   move_type: string,
-  row: number,
-  col: number,
-  direction: string,
-  tiles: string
+  row?: number,
+  col?: number,
+  direction?: string,
+  tiles?: string
 }
 
 @Injectable({

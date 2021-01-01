@@ -10,7 +10,7 @@
   </div>
 </div>
 <div class="rack">
-  <div *ngFor="let tile of displayedTiles" class="tile">
+  <div *ngFor="let tile of displayedTiles" class="tile" (click)="tileClick(tile)">
     <p class="tile-letter">{{tile.letter}}</p>
     <p class="tile-value">{{tile.value}}</p>
   </div>
@@ -21,4 +21,6 @@
     [(ngModel)]="playTiles"
     />
   <button type="submit" class="btn btn-primary" (click)="playMove()">Make move</button>
+  <button type="submit" class="btn btn-primary" (click)="change()">Change</button>
+  <button type="submit" class="btn btn-primary" (click)="pass()">Pass</button>  
 </div>

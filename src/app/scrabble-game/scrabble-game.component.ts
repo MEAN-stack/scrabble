@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RackComponent } from '../rack/rack.component';
 import { ScrabbleBoardComponent } from '../scrabble-board/scrabble-board.component';
 import { GameService, PlayMove } from '../game/game.service';
 import { WebsocketService } from '../websocket.service';

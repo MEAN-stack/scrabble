@@ -51,14 +51,23 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
   }
 
   onClick(row: number, col: number){
-    this.playTiles = '';
-    this.displayedTiles = this.tiles.slice();
-    this.userBoard = this.board;
+    this.resetVars();
     if(this.isFocused(row,col)){
       this.userDirection = (this.userDirection==='right') ? 'down':'right';
     }
     this.userSquare = {row: row, col: col};
     this.playSquare = {row: row, col: col};
+  }
+
+  tileClick(tile){
+    console.dir(tile);
+    let letter;
+    if(tile.isBlank){
+      letter = prompt('what letter for the blank?');
+    } else {
+      letter = tile.letter;
+    }
+    this.onKeyPress({key: letter});
   }
 
   onKeyDown(evt){
@@ -139,6 +148,43 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
     return (this.userSquare.row ===row && this.userSquare.col===col);
   }
 
+  change(){
+    this.gameService.playMove({move_type: 'change', tiles: this.playTiles}).subscribe(
+      (response) => {
+        console.log(response);
+        if(response.status=='ok'){
+          this.tiles = response.tiles;
+        }
+        this.resetVars();
+      },
+      (err) => {
+        console.log(err);
+      });
+  }
+
+  pass(){
+    this.gameService.playMove({move_type:'pass'}).subscribe(
+      (response) => {
+        console.log(response);
+        if(response.status=='ok'){
+          this.tiles = response.tiles;
+          this.resetVars();
+        }
+
+        this.resetVars();
+
+      },
+      (err) => {
+        console.log(err);
+      });
+  }
+
+  resetVars(){
+    this.userBoard = ' '.repeat(255)
+    this.displayedTiles = this.tiles.slice()
+    this.playTiles = ''
+  }
+
   playMove(){
     let move = {
       row: this.playSquare.row,
@@ -153,8 +199,9 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
         console.log(response);
         if(response.status=='ok'){
           this.tiles = response.tiles;
-          this.displayedTiles = this.tiles.slice();
         }
+        this.resetVars();
+
       },
       (err) => {
         console.log(err);
@@ -175,6 +222,6 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
   ngOnChanges(): void {
-    this.displayedTiles = this.tiles.slice();
+    this.resetVars();
   }
 }
