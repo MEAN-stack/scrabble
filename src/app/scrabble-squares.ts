@@ -36,7 +36,7 @@ function bonus(row: number, col: number): string{
   if ((x === 3 && y === 7) || (x === 7 && y === 3)){
     return 'DL';
   }
-  return 'none'
+  return 'none';
 }
 
 for (let row = 0; row < 15; row++){
