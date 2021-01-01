@@ -2,5 +2,6 @@
   <app-scrabble-board class="board-container" [board]="game.board" [tiles]="tiles"></app-scrabble-board>
   <div>
     <app-player-card *ngFor="let player of game.players" [player]=player></app-player-card>
+    <button class="btn btn-primary" (click)="refresh()"><div class="glyphicon glyphicon-refresh"></div></button>    
   </div>
 </div>

@@ -57,9 +57,27 @@ export class ScrabbleGameComponent implements OnInit {
     }
   }
 
+  refresh(): void {
+    this.gameService.getGameInfo().subscribe(
+      (response) => {
+        this.game = response;
+        for (const player of this.game.players){
+          player.is_current = false;
+          if (player.user === this.game.current_player){
+            player.is_current = true;
+          }
+          if (this.user === player.user){
+            this.tiles = player.tiles;
+          }
+        }
+      },
+      (err) => {
+        console.log(err);
+      });
+  }
+
 
   ngOnInit(): void {
-
     this.ws.connect(this.getUrl()).map(
       (response) => {
         const data = JSON.parse(response.data);
@@ -82,22 +100,6 @@ export class ScrabbleGameComponent implements OnInit {
             }
           }
         });
-
-    this.gameService.getGameInfo().subscribe(
-      (response) => {
-        this.game = response;
-        for (const player of this.game.players){
-          player.is_current = false;
-          if (player.user === this.game.current_player){
-            player.is_current = true;
-          }
-          if (this.user === player.user){
-            this.tiles = player.tiles;
-          }
-        }
-      },
-      (err) => {
-        console.log(err);
-      });
+    this.refresh();
   }
 }
