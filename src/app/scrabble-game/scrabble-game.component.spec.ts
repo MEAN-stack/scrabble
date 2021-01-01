@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RackComponent } from './rack.component';
+import { ScrabbleGameComponent } from './scrabble-game.component';
 
-describe('RackComponent', () => {
-  let component: RackComponent;
-  let fixture: ComponentFixture<RackComponent>;
+describe('ScrabbleGameComponent', () => {
+  let component: ScrabbleGameComponent;
+  let fixture: ComponentFixture<ScrabbleGameComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RackComponent ]
+      declarations: [ ScrabbleGameComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RackComponent);
+    fixture = TestBed.createComponent(ScrabbleGameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

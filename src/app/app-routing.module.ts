@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import { ScrabbleBoardComponent } from './scrabble-board/scrabble-board.component'
+import { ScrabbleBoardComponent } from './scrabble-board/scrabble-board.component';
+import { ScrabbleGameComponent } from './scrabble-game/scrabble-game.component';
+import { LobbyComponent } from './lobby/lobby.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'game-page', component: ScrabbleBoardComponent },
+  { path: 'lobby', component: LobbyComponent },
+  { path: 'game-page', component: ScrabbleGameComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
@@ -14,4 +17,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-

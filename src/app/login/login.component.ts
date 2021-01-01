@@ -23,13 +23,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.loginForm.disable();
     this.loginService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
       (response) => {
-        console.log("JWT: " + response.jwt);
+        console.log('JWT: ' + response.jwt);
         localStorage.setItem('jwt', response.jwt);
-        this.router.navigate(['../game-page']);
+        localStorage.setItem('user', this.loginForm.value.username);
+        this.router.navigate(['../lobby']);
       },
       (err) => {
         console.log(err);
