@@ -91,13 +91,13 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
       }
       this.userBoard = this.setCharAt(this.userBoard, index, ' ');
       this.playTiles = this.playTiles.slice(0, -1);
-      for (const tile of tiles){
+      for (const tile of this.tiles){
         if (letter === tile.letter){
           this.displayedTiles.push(tile);
           return;
         }
       }
-      for (const tile of tiles){
+      for (const tile of this.tiles){
         if (tile.isBlank){
           this.displayedTiles.push(tile);
           return;
@@ -122,6 +122,7 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
         this.userBoard = this.setCharAt(this.userBoard, index, letter);
         this.playTiles += letter;
         this.advanceSquare(1);
+        return;
       }
     }
     for (let i = 0; i < this.displayedTiles.length; i++){
@@ -131,6 +132,7 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
         this.userBoard = this.setCharAt(this.userBoard, index, letter.toLowerCase());
         this.playTiles += letter.toLowerCase();
         this.advanceSquare(1);
+        return;
       }
     }
   }
@@ -138,11 +140,14 @@ export class ScrabbleBoardComponent implements OnInit, OnChanges {
   advanceSquare(dir: number): void{
     let index = this.userSquare.row * 15 + this.userSquare.col;
     if (this.userDirection === 'right'){
+      this.userSquare.col += dir;
+      index += 1;
       while (this.userSquare.col >= 0 && this.userSquare.col < 14 && this.board[index] !== ' '){
         this.userSquare.col += dir;
         index += 1;
       }
     }else{
+      this.userSquare.row += dir;
       while (this.userSquare.row >= 0 && this.userSquare.row < 14 && this.board[index] !== ' '){
         this.userSquare.row += dir;
         index += 15;

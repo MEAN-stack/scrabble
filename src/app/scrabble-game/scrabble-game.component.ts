@@ -74,7 +74,7 @@ export class ScrabbleGameComponent implements OnInit {
           }
           if (msg.title === 'game'){
             this.game = msg.data;
-            for (const player of players){
+            for (const player of this.game.players){
               player.is_current = false;
               if (player.user === this.game.current_player){
                 player.is_current = true;
@@ -86,7 +86,7 @@ export class ScrabbleGameComponent implements OnInit {
     this.gameService.getGameInfo().subscribe(
       (response) => {
         this.game = response;
-        for (const player of players){
+        for (const player of this.game.players){
           player.is_current = false;
           if (player.user === this.game.current_player){
             player.is_current = true;
